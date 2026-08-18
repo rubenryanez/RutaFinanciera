@@ -1,0 +1,8 @@
+{
+  "nombre": "Ruta Financiera",
+  "version": "2026-08-18-0128",
+  "generado": "2026-08-18T01:28:19.248Z",
+  "datosFondos": "16/08/2026",
+  "fuenteDatos": "Reporte de Rentabilidad al 16/08/2026",
+  "notas": "La app compara este archivo con su propia versión y avisa cuando hay una publicación más reciente."
+}

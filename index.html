@@ -1224,6 +1224,33 @@ body.sb-min .sb-prog { display:none }
   #explora { scroll-margin-top: calc(var(--topbar-h) + var(--ctx-h) + var(--s4)); }
 }
 
+/* ═══ AVISO DE VERSIÓN PUBLICADA ═══ */
+
+.upd {
+  position:fixed; z-index:400;
+  right:var(--s5); bottom:calc(var(--s5) + env(safe-area-inset-bottom, 0px));
+  display:flex; align-items:center; gap:var(--s4);
+  padding:var(--s3) var(--s3) var(--s3) var(--s5);
+  background:var(--navy); color:#fff;
+  border-radius:12px; box-shadow:0 8px 30px rgba(13,27,46,.28);
+  font-size:var(--fs-small); max-width:calc(100vw - var(--s6));
+  animation:enter var(--t-mid) both;
+}
+.upd-t { color:#fff; opacity:.92 }
+.upd-btn {
+  padding:8px 14px; border-radius:8px; background:#fff; color:var(--navy);
+  font-size:var(--fs-small); font-weight:700; white-space:nowrap;
+  transition:opacity var(--t-fast);
+}
+.upd-btn:hover { opacity:.88 }
+.upd-x { color:#fff; opacity:.6; font-size:18px; line-height:1; padding:0 var(--s2) }
+.upd-x:hover { opacity:1 }
+@media (max-width:479px){
+  .upd { left:var(--s4); right:var(--s4); flex-wrap:wrap }
+  .upd-btn { flex:1 }
+}
+@media print { .upd { display:none !important } }
+
 
 /* ═══════════════ styles/mobile.css ═══════════════ */
 /* ============================================================
@@ -1627,6 +1654,11 @@ body.sb-min .sb-prog { display:none }
    Para cargar un reporte nuevo basta con reemplazar este archivo
    y data/returns.js. Nada más del proyecto debe modificarse.
    ============================================================ */
+
+/* Versión de la publicación. La reescribe build-standalone.js en cada
+   compilación y se compara contra version.json para detectar que hay
+   una versión más reciente en línea. NO es la fecha de los datos. */
+var APP_VERSION = '2026-08-18-0128';
 
 var DATA_META = {
 
@@ -4039,6 +4071,92 @@ var Router = (function () {
     getCurrent: getCurrent,
     parse: parse
   };
+})();
+
+
+/* ═══════════════ core/update.js ═══════════════ */
+/* ============================================================
+   RUTA FINANCIERA · Comprobación de versión publicada
+   ------------------------------------------------------------
+   Al reemplazar index.html en el servidor, el navegador y el CDN
+   pueden seguir sirviendo la copia anterior. Esta comprobación
+   consulta version.json —con parámetro anti-caché— y avisa
+   cuando la versión publicada es más reciente que la cargada.
+
+   No recarga por su cuenta: informa y deja la decisión al usuario,
+   para no interrumpir una simulación a medio hacer.
+
+   Sólo actúa sobre http/https. Abierto por doble clic (file://)
+   no hay servidor que consultar y la comprobación se omite.
+   ============================================================ */
+
+var UpdateCheck = (function () {
+
+  var INTERVALO_MIN = 10;      /* minutos entre comprobaciones */
+  var ultima = 0;
+  var avisado = false;
+
+  function aplicable() {
+    return (location.protocol === 'http:' || location.protocol === 'https:');
+  }
+
+  function banner(version) {
+    if (avisado) return;
+    avisado = true;
+
+    var el = document.createElement('div');
+    el.className = 'upd';
+    el.setAttribute('role', 'status');
+    el.innerHTML =
+      '<span class="upd-t">Hay una versión más reciente disponible.</span>' +
+      '<button type="button" class="upd-btn" id="upd-recargar">Actualizar</button>' +
+      '<button type="button" class="upd-x" id="upd-cerrar" aria-label="Descartar">×</button>';
+    document.body.appendChild(el);
+
+    document.getElementById('upd-recargar').addEventListener('click', function () {
+      /* Se fuerza la relectura desde el servidor, no desde caché. */
+      var u = location.href.split('#')[0];
+      var sep = u.indexOf('?') === -1 ? '?' : '&';
+      location.replace(u + sep + 'v=' + encodeURIComponent(version) + location.hash);
+    });
+
+    document.getElementById('upd-cerrar').addEventListener('click', function () {
+      el.remove();
+    });
+  }
+
+  function comprobar(forzar) {
+    if (!aplicable()) return;
+
+    var ahora = Date.now();
+    if (!forzar && ahora - ultima < INTERVALO_MIN * 60000) return;
+    ultima = ahora;
+
+    if (typeof fetch !== 'function') return;
+
+    fetch('version.json?t=' + ahora, { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.version) return;
+        if (typeof APP_VERSION === 'undefined') return;
+        /* La versión de referencia es la publicada: si difiere de la
+           que se está ejecutando, hay algo más nuevo en el servidor. */
+        if (data.version !== APP_VERSION) banner(data.version);
+      })
+      .catch(function () { /* sin conexión o sin version.json: se ignora */ });
+  }
+
+  function init() {
+    if (!aplicable()) return;
+    comprobar(true);
+    /* Al volver a la pestaña se vuelve a comprobar, que es cuando
+       resulta más probable que la publicación haya cambiado. */
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) comprobar(false);
+    });
+  }
+
+  return { init: init, comprobar: comprobar };
 })();
 
 
@@ -8255,6 +8373,7 @@ var ScreenResumen = (function () {
     bindState();
     bindViewport();
     Router.start();
+    if (window.UpdateCheck) UpdateCheck.init();
   }
 
   if (document.readyState === 'loading') {
