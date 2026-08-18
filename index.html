@@ -14,7 +14,9 @@
      trayectoria ascendente con nodos sobre cuadrado navy. Sin archivo externo. -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22%23112240%22%2F%3E%3Cpath%20d%3D%22M7%2022.5%2012.5%2017l5%202.5L24.5%2010%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.4%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20opacity%3D%22.85%22%2F%3E%3Ccircle%20cx%3D%227%22%20cy%3D%2222.5%22%20r%3D%222%22%20fill%3D%22%23fff%22%2F%3E%3Ccircle%20cx%3D%2212.5%22%20cy%3D%2217%22%20r%3D%222%22%20fill%3D%22%23fff%22%2F%3E%3Ccircle%20cx%3D%2224.5%22%20cy%3D%2210%22%20r%3D%223.2%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22%23112240%22%2F%3E%3Cpath%20d%3D%22M7%2022.5%2012.5%2017l5%202.5L24.5%2010%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.4%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20opacity%3D%22.85%22%2F%3E%3Ccircle%20cx%3D%227%22%20cy%3D%2222.5%22%20r%3D%222%22%20fill%3D%22%23fff%22%2F%3E%3Ccircle%20cx%3D%2212.5%22%20cy%3D%2217%22%20r%3D%222%22%20fill%3D%22%23fff%22%2F%3E%3Ccircle%20cx%3D%2224.5%22%20cy%3D%2210%22%20r%3D%223.2%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E">
-<meta name="description" content="Herramienta de Educación y Planificación Financiera. Datos al 2026-08-18.">
+<!-- La fecha de esta metadata es la de los DATOS FINANCIEROS, no la de
+     la versión del archivo. No deben confundirse. -->
+<meta name="description" content="Herramienta de Educación y Planificación Financiera. Rentabilidades de fondos al 16/08/2026.">
 
 <!-- Versión standalone. Todo el CSS, JavaScript y datos están incrustados
      en este archivo. La única dependencia externa es la tipografía Manrope;
@@ -848,7 +850,15 @@ table.tbl td.n { font-weight:600; font-size:var(--fs-num); white-space:nowrap; }
 .chart-wrap { margin-top:var(--s6) }
 .chart-legend { display:flex; gap:var(--s6); flex-wrap:wrap; margin-bottom:var(--s5); font-size:var(--fs-small); color:var(--text-2) }
 .chart-legend i { display:inline-block; width:16px; height:3px; border-radius:2px; margin-right:var(--s2); vertical-align:middle }
-.chart-svg { width:100%; height:auto; display:block; overflow:visible }
+.chart-svg {
+  display:block; width:100%; height:auto; min-height:220px;
+  overflow:visible;
+}
+.chart-fallback {
+  display:block; padding:var(--s6) var(--s5);
+  border:1px solid var(--border); border-radius:12px;
+  font-size:var(--fs-small); color:var(--text-2); text-align:center;
+}
 
 /* ═══ BRECHA ═══ */
 
@@ -1140,6 +1150,80 @@ body.sb-min .sb-prog { display:none }
   display:flex; align-items:baseline; gap:var(--s5); flex-wrap:wrap;
 }
 
+/* ═══ CHECKPOINT DE RUTA ═══
+   Sobrio: regla superior fina, gris y navy, sin colores de alerta. */
+
+.cp {
+  margin-top:var(--s8); padding-top:var(--s5);
+  border-top:1px solid var(--border-strong);
+}
+.cp-t {
+  font-size:10px; font-weight:700; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--text-3);
+}
+.cp-items {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:var(--s5); margin-top:var(--s4);
+}
+.cp-k { font-size:10px; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--text-3) }
+.cp-v { font-size:var(--fs-h3); font-weight:600; letter-spacing:-.012em;
+  color:var(--navy); margin-top:2px }
+.cp-v.is-empty { color:var(--text-3); font-weight:400 }
+.cp-msg { font-size:var(--fs-small); color:var(--text-2); margin-top:var(--s4);
+  max-width:66ch }
+.cp-acts { display:flex; gap:var(--s4); flex-wrap:wrap; margin-top:var(--s5) }
+
+/* ═══ FOCOS DE ETAPA ═══ */
+
+.focos { display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:0 var(--s8); margin-top:var(--s4) }
+.foco { padding:var(--s4) 0; border-top:1px solid var(--border) }
+.foco-t { font-size:var(--fs-h3); font-weight:600; letter-spacing:-.012em;
+  color:var(--navy) }
+.foco-d { font-size:var(--fs-small); color:var(--text-2); margin-top:var(--s1);
+  line-height:1.55 }
+@media (max-width:767px){ .focos{ grid-template-columns:1fr; gap:0 } }
+
+/* ═══ SUGERENCIA / VISTA (no persistida) ═══ */
+
+.sugerido {
+  display:inline-flex; align-items:baseline; gap:var(--s2);
+  margin-top:var(--s4); font-size:var(--fs-small); color:var(--text-2);
+}
+.sugerido b { color:var(--navy); font-weight:600 }
+.sugerido-k { font-size:10px; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--text-3) }
+
+.vista-nota { font-size:var(--fs-small); color:var(--text-3); margin-top:var(--s3) }
+.vista-nota b { color:var(--text-2); font-weight:600 }
+
+.empty-sel {
+  margin-top:var(--s6); padding:var(--s6) 0;
+  border-top:1px solid var(--border-strong);
+  font-size:var(--fs-read); color:var(--text-2);
+}
+
+.dg-focos { margin-top:var(--s6); padding-top:var(--s5); border-top:1px solid var(--border) }
+.dg-sug { margin-top:var(--s5); padding-left:var(--s4); border-left:2px solid var(--border-strong) }
+.dg-sug .sugerido { margin-top:var(--s2); flex-wrap:wrap }
+
+
+/* Procedencia de cada sección del resultado final */
+.rt-origen {
+  font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3); margin-top:var(--s2);
+}
+.rt-leyenda { margin-top:var(--s2); max-width:64ch }
+
+
+/* La barra de contexto es sticky: el destino del scroll interno
+   necesita margen para no quedar tapado. */
+#explora { scroll-margin-top: calc(var(--ctx-h) + var(--s5)); }
+@media (max-width:1023px){
+  #explora { scroll-margin-top: calc(var(--topbar-h) + var(--ctx-h) + var(--s4)); }
+}
+
 
 /* ═══════════════ styles/mobile.css ═══════════════ */
 /* ============================================================
@@ -1356,6 +1440,8 @@ body.sb-min .sb-prog { display:none }
 
   .res-big { font-size: 34px; letter-spacing: -.035em; word-break: break-word; }
   .sens .scen-in input { width: 76px; }
+
+  .chart-svg { min-height: 180px; }
 
   /* ── Brecha ── */
   .gap-track { height: 38px; }
@@ -1632,6 +1718,16 @@ var STAGE_CONFIG = {
     descripcion: 'Etapa de formación del patrimonio inicial. El horizonte disponible ' +
                  'es amplio, lo que permite considerar el efecto del interés compuesto ' +
                  'sobre plazos largos.',
+    focos: [
+      { titulo: 'Reserva de liquidez',
+        descripcion: 'Construir recursos disponibles para contingencias y necesidades de corto plazo.' },
+      { titulo: 'Ahorro sistemático',
+        descripcion: 'Establecer aportes periódicos para comenzar a formar patrimonio.' },
+      { titulo: 'Objetivos por horizonte',
+        descripcion: 'Separar necesidades de corto, mediano y largo plazo.' },
+      { titulo: 'Planificación previsional temprana',
+        descripcion: 'Incorporar la jubilación dentro de la planificación aprovechando un horizonte extenso.' }
+    ],
     conceptos: ['Interés compuesto', 'Horizonte', 'Ahorro sistemático', 'Brecha previsional']
   },
 
@@ -1645,6 +1741,16 @@ var STAGE_CONFIG = {
     conceptoCentral: 'Crecimiento y diversificación patrimonial',
     descripcion: 'Etapa de crecimiento del patrimonio ya constituido, con foco en ' +
                  'diversificación y en la coexistencia de objetivos de distinto horizonte.',
+    focos: [
+      { titulo: 'Liquidez',
+        descripcion: 'Mantener recursos disponibles para contingencias y compromisos próximos.' },
+      { titulo: 'Diversificación por objetivos',
+        descripcion: 'Organizar el patrimonio según distintas necesidades y horizontes.' },
+      { titulo: 'Planificación previsional',
+        descripcion: 'Revisar el ahorro destinado a jubilación y la eventual brecha futura.' },
+      { titulo: 'Protección patrimonial',
+        descripcion: 'Incorporar protección dentro de la planificación cuando corresponda.' }
+    ],
     conceptos: ['Diversificación', 'Horizonte', 'Riesgo', 'Planificación patrimonial']
   },
 
@@ -1658,6 +1764,16 @@ var STAGE_CONFIG = {
     conceptoCentral: 'Preparación de la transición hacia la jubilación',
     descripcion: 'Etapa de preparación de la transición. El horizonte hasta el retiro ' +
                  'se acorta y la brecha previsional adquiere mayor relevancia.',
+    focos: [
+      { titulo: 'Brecha previsional',
+        descripcion: 'Dimensionar la diferencia entre el ingreso esperado y el ingreso deseado durante la jubilación.' },
+      { titulo: 'Horizonte restante',
+        descripcion: 'Identificar cuántos años quedan antes del retiro y ordenar los objetivos en función de ese plazo.' },
+      { titulo: 'Liquidez futura',
+        descripcion: 'Separar recursos que podrían ser necesarios antes o durante los primeros años de jubilación.' },
+      { titulo: 'Volatilidad y horizonte',
+        descripcion: 'Revisar la relación entre las fluctuaciones de las inversiones y el tiempo disponible.' }
+    ],
     conceptos: ['Brecha previsional', 'Horizonte', 'Volatilidad', 'Beneficios tributarios']
   },
 
@@ -1671,17 +1787,34 @@ var STAGE_CONFIG = {
     conceptoCentral: 'Utilización y preservación del patrimonio',
     descripcion: 'Etapa de utilización del patrimonio construido, con foco en ' +
                  'preservación, liquidez y continuidad de los ingresos.',
+    focos: [
+      { titulo: 'Liquidez',
+        descripcion: 'Mantener recursos disponibles para gastos y contingencias.' },
+      { titulo: 'Continuidad de ingresos',
+        descripcion: 'Organizar el patrimonio considerando necesidades periódicas de flujo.' },
+      { titulo: 'Preservación patrimonial',
+        descripcion: 'Considerar el equilibrio entre utilización, horizonte y conservación del patrimonio.' },
+      { titulo: 'Inflación y UF',
+        descripcion: 'Considerar el efecto de la inflación sobre el poder adquisitivo.' },
+      { titulo: 'Planificación patrimonial',
+        descripcion: 'Revisar protección, beneficiarios y continuidad del patrimonio cuando corresponda.' }
+    ],
     conceptos: ['Liquidez', 'Preservación', 'Volatilidad', 'Planificación patrimonial']
   }
 };
 
 var STAGE_ORDER = ['acumulacion', 'consolidacion', 'preretiro', 'distribucion'];
 
+/* Rango de edad válido. Debe ser idéntico en la interfaz, en la
+   validación y en el modelo de datos. */
+var AGE_MIN = 18;
+var AGE_MAX = 110;
+
 /* Resuelve la etapa a partir de la edad.
    Devuelve el id de etapa o null si la edad no es válida. */
 function resolveStage(edad) {
   var e = parseInt(edad, 10);
-  if (isNaN(e) || e < 18 || e > 120) return null;
+  if (isNaN(e) || e < AGE_MIN || e > AGE_MAX) return null;
   if (e < 35) return 'acumulacion';
   if (e < 50) return 'consolidacion';
   if (e < 62) return 'preretiro';
@@ -3994,6 +4127,69 @@ var Icons = (function () {
 })();
 
 
+/* ═══════════════ ui/checkpoint.js ═══════════════ */
+/* ============================================================
+   RUTA FINANCIERA · RouteCheckpoint
+   ------------------------------------------------------------
+   Muestra al final de un módulo qué quedó definido antes de
+   avanzar. Informa; no bloquea.
+
+   No usa window.confirm ni ventanas modales: se integra al pie
+   de la pantalla. Tono sobrio, sin colores de alerta.
+   ============================================================ */
+
+var RouteCheckpoint = (function () {
+
+  /* opts = {
+       titulo:    encabezado, por defecto "Antes de continuar"
+       items:     [{ k, v }]  · v nulo o vacío se muestra "Sin definir"
+       mensaje:   línea explicativa
+       acciones:  [{ label, href, id, primary }]
+     }
+     Las acciones con `href` navegan; las que llevan `id` las
+     enlaza el módulo que invoca el componente. */
+
+  function html(opts) {
+    var items = (opts.items || []).map(function (i) {
+      var vacio = !i.v;
+      return '<div class="cp-item">' +
+               '<div class="cp-k">' + Fmt.esc(i.k) + '</div>' +
+               '<div class="cp-v' + (vacio ? ' is-empty' : '') + '">' +
+                 Fmt.esc(vacio ? 'Sin definir' : i.v) + '</div>' +
+             '</div>';
+    }).join('');
+
+    var acciones = (opts.acciones || []).map(function (a) {
+      var cls = a.primary ? 'btn btn--primary' : 'btn btn--secondary';
+      if (a.href) {
+        return '<a class="' + cls + '" href="' + a.href + '"' +
+               (a.id ? ' id="' + a.id + '"' : '') + '>' + Fmt.esc(a.label) + '</a>';
+      }
+      return '<button type="button" class="' + cls + '" id="' + (a.id || '') + '">' +
+             Fmt.esc(a.label) + '</button>';
+    }).join('');
+
+    return '<section class="cp">' +
+      '<div class="cp-t">' + Fmt.esc(opts.titulo || 'Antes de continuar') + '</div>' +
+      (items ? '<div class="cp-items">' + items + '</div>' : '') +
+      (opts.mensaje ? '<p class="cp-msg">' + Fmt.esc(opts.mensaje) + '</p>' : '') +
+      (acciones ? '<div class="cp-acts">' + acciones + '</div>' : '') +
+    '</section>';
+  }
+
+  /* Atajo: construye el bloque a partir de si todo está definido */
+  function build(items, completo, textos) {
+    return html({
+      items: items,
+      mensaje: completo ? textos.completo : textos.parcial,
+      acciones: completo ? textos.accionesCompleto : textos.accionesParcial
+    });
+  }
+
+  return { html: html, build: build };
+})();
+
+
 /* ═══════════════ ui/nav.js ═══════════════ */
 /* ============================================================
    RUTA FINANCIERA · Navegación
@@ -4114,6 +4310,7 @@ var Nav = (function () {
       document.getElementById('sb-reset').addEventListener('click', function () {
         AppState.reset();
         if (window.ScreenSimulador && ScreenSimulador.reset) ScreenSimulador.reset();
+        if (window.ScreenSoluciones && ScreenSoluciones.reset) ScreenSoluciones.reset();
         if (window.ScreenBrecha && ScreenBrecha.reset) ScreenBrecha.reset();
         close();
         Router.go('inicio');
@@ -4283,6 +4480,7 @@ var ContextBar = (function () {
     document.getElementById('ctx-reset').addEventListener('click', function () {
       AppState.reset();
       if (window.ScreenSimulador && ScreenSimulador.reset) ScreenSimulador.reset();
+      if (window.ScreenSoluciones && ScreenSoluciones.reset) ScreenSoluciones.reset();
       Router.go('inicio');
     });
   }
@@ -4421,29 +4619,69 @@ var Volatility = (function () {
    RUTA FINANCIERA · Gráfico
    ------------------------------------------------------------
    SVG generado en el propio proyecto, sin librerías externas.
-   Motivo: la herramienta debe funcionar abriendo el archivo sin
-   conexión, y el control total del trazo permite mantener la
-   dirección visual (líneas finas, sin grilla vertical, sin caja).
+
+   COMPATIBILIDAD WEB
+   Los atributos de presentación de un SVG (stroke, fill) no
+   resuelven var(--x) de forma fiable en todos los motores ni al
+   servirse desde algunos entornos. Por eso las variables CSS se
+   resuelven a HEX en JavaScript ANTES de construir el marcado,
+   con respaldo literal si la variable no está disponible.
    ============================================================ */
 
 var Chart = (function () {
 
-  /* El SVG escala con el contenedor. En móvil se usa un lienzo más
-     estrecho para que la tipografía, medida en unidades del viewBox,
-     no quede diminuta al reducirse. */
+  /* ── Resolución de color ── */
+
+  function cssColor(variable, fallback) {
+    try {
+      var value = getComputedStyle(document.documentElement)
+        .getPropertyValue(variable)
+        .trim();
+      return value || fallback;
+    } catch (e) {
+      return fallback;
+    }
+  }
+
+  function palette() {
+    return {
+      navy:         cssColor('--navy', '#112240'),
+      border:       cssColor('--border', '#ECEFF4'),
+      borderStrong: cssColor('--border-strong', '#D8E0EA'),
+      text3:        cssColor('--text-3', '#9AA5B6'),
+      vol2:         cssColor('--vol-2', '#5B9BC4'),
+      vol3:         cssColor('--vol-3', '#2F5FA8')
+    };
+  }
+
+  /* Traduce el color declarado por el módulo a un HEX resuelto */
+  function resolver(color, COLORS) {
+    if (!color) return COLORS.navy;
+    var m = String(color).match(/^var\(\s*(--[\w-]+)\s*\)$/);
+    if (!m) return color;
+    var mapa = {
+      '--navy': COLORS.navy,
+      '--border': COLORS.border,
+      '--border-strong': COLORS.borderStrong,
+      '--text-3': COLORS.text3,
+      '--vol-2': COLORS.vol2,
+      '--vol-3': COLORS.vol3
+    };
+    return mapa[m[1]] || cssColor(m[1], COLORS.navy);
+  }
+
+  /* ── Lienzo según ancho ── */
+
   function lienzo() {
-    var w = window.innerWidth;
-    if (w <= 479) return { W: 340, H: 240, M: { top: 14, right: 54, bottom: 26, left: 4 }, fs: 11, ticks: 3 };
-    if (w <= 767) return { W: 400, H: 260, M: { top: 14, right: 58, bottom: 28, left: 6 }, fs: 11, ticks: 4 };
+    var w = (typeof window !== 'undefined') ? window.innerWidth : 1200;
+    if (w <= 479)  return { W: 340, H: 240, M: { top: 14, right: 54, bottom: 26, left: 4 }, fs: 11, ticks: 3 };
+    if (w <= 767)  return { W: 400, H: 260, M: { top: 14, right: 58, bottom: 28, left: 6 }, fs: 11, ticks: 4 };
     if (w <= 1023) return { W: 620, H: 300, M: { top: 16, right: 68, bottom: 30, left: 8 }, fs: 11, ticks: 6 };
     return { W: 760, H: 320, M: { top: 16, right: 76, bottom: 30, left: 8 }, fs: 11, ticks: 0 };
   }
 
-  /* Redondeo del tope del eje. Los pasos 1/2/5/10 son demasiado
-     gruesos: con un máximo de 25,5M saltarían a 50M y el gráfico
-     quedaría aplastado en la mitad inferior. */
   function nice(max) {
-    if (max <= 0) return 1;
+    if (!isFinite(max) || max <= 0) return 1;
     var exp = Math.pow(10, Math.floor(Math.log10(max)));
     var f = max / exp;
     var pasos = [1, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10];
@@ -4454,97 +4692,169 @@ var Chart = (function () {
   }
 
   function abreviar(v) {
+    if (!isFinite(v)) return '';
     if (v >= 1e9) return '$' + Fmt.num(v / 1e9, 1) + 'MM';
     if (v >= 1e6) return '$' + Fmt.num(v / 1e6, v / 1e6 < 10 ? 1 : 0) + 'M';
     if (v >= 1e3) return '$' + Math.round(v / 1e3) + 'k';
     return '$' + Math.round(v);
   }
 
-  /* series: [{ nombre, puntos:[{anio,total}], color, dash }]
-     aportado: [{anio, aportado}] — área de referencia */
-  function proyeccion(series, aportado) {
-    var L = lienzo();
-    var W = L.W, H = L.H, M = L.M, FS = L.fs;
-
-    var anios = aportado[aportado.length - 1].anio || 1;
-
-    var maxV = 0;
-    series.forEach(function (s) {
-      s.puntos.forEach(function (p) { if (p.total > maxV) maxV = p.total; });
-    });
-    aportado.forEach(function (p) { if (p.aportado > maxV) maxV = p.aportado; });
-    var top = nice(maxV * 1.08) || 1;
-
-    var iw = W - M.left - M.right;
-    var ih = H - M.top - M.bottom;
-
-    function x(a) { return M.left + (a / anios) * iw; }
-    function y(v) { return M.top + ih - (v / top) * ih; }
-
-    /* Grilla horizontal solamente */
-    var lineas = [0, 0.25, 0.5, 0.75, 1].map(function (f) {
-      var v = top * f, yy = y(v);
-      return '<line x1="' + M.left + '" y1="' + yy + '" x2="' + (M.left + iw) + '" y2="' + yy +
-             '" stroke="var(--border)" stroke-width="1"/>' +
-             '<text x="' + (M.left + iw + 8) + '" y="' + (yy + 4) +
-             '" font-size="' + FS + '" fill="var(--text-3)" font-family="var(--font)">' +
-             abreviar(v) + '</text>';
-    }).join('');
-
-    /* Área de capital aportado */
-    var areaPts = aportado.map(function (p) { return x(p.anio) + ',' + y(p.aportado); });
-    var area = 'M' + M.left + ',' + y(0) + ' L' + areaPts.join(' L') +
-               ' L' + x(anios) + ',' + y(0) + ' Z';
-
-    var lineaAportado = 'M' + areaPts.join(' L');
-
-    /* Líneas de escenario */
-    /* Las series marcadas como discretas se dibujan más finas y con
-       menor opacidad: acompañan al resultado, no compiten con él. */
-    var paths = series.map(function (s) {
-      var d = 'M' + s.puntos.map(function (p) { return x(p.anio) + ',' + y(p.total); }).join(' L');
-      return '<path d="' + d + '" fill="none" stroke="' + s.color + '" ' +
-             'stroke-width="' + (s.discreta ? 1.5 : 2.5) + '" ' +
-             (s.discreta ? 'opacity=".55" ' : '') +
-             'stroke-linejoin="round" stroke-linecap="round"' +
-             (s.dash ? ' stroke-dasharray="' + s.dash + '"' : '') + '/>';
-    }).join('');
-
-    /* Etiquetas del eje X.
-       En pantallas estrechas se reduce el número de marcas para que
-       no se superpongan. */
-    var pasos;
-    if (L.ticks) {
-      pasos = Math.max(1, Math.ceil(anios / (L.ticks - 1)));
-    } else {
-      pasos = anios <= 10 ? 1 : anios <= 20 ? 5 : 10;
-    }
-
-    var ejeX = '';
-    function tick(a, anchor) {
-      return '<text x="' + x(a) + '" y="' + (H - 7) + '" font-size="' + FS + '" ' +
-             'fill="var(--text-3)" text-anchor="' + anchor + '" font-family="var(--font)">' +
-             (a === 0 ? 'Hoy' : 'Año ' + a) + '</text>';
-    }
-
-    for (var a = 0; a <= anios - pasos * 0.5; a += pasos) {
-      ejeX += tick(a, a === 0 ? 'start' : 'middle');
-    }
-    ejeX += tick(anios, 'end');
-
-    return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" ' +
-             'preserveAspectRatio="xMidYMid meet" ' +
-             'role="img" ' +
-             'aria-label="Proyección de capital a ' + anios + ' años">' +
-             lineas +
-             '<path d="' + area + '" fill="var(--border)" opacity=".55"/>' +
-             '<path d="' + lineaAportado + '" fill="none" stroke="var(--border-strong)" ' +
-               'stroke-width="1.5"/>' +
-             paths + ejeX +
-           '</svg>';
+  /* Redondeo defensivo: ningún atributo puede contener NaN */
+  function n(v) {
+    var x = Number(v);
+    return isFinite(x) ? Math.round(x * 100) / 100 : 0;
   }
 
-  return { proyeccion: proyeccion, abreviar: abreviar };
+  var FALLBACK =
+    '<p class="chart-fallback">No fue posible visualizar el gráfico. ' +
+    'Los resultados numéricos permanecen disponibles.</p>';
+
+  /* ── Generación ── */
+
+  function proyeccion(series, aportado) {
+    try {
+      if (!aportado || !aportado.length || !series || !series.length) return FALLBACK;
+
+      var COLORS = palette();
+      var L = lienzo();
+      var W = L.W, H = L.H, M = L.M, FS = L.fs;
+
+      var anios = Number(aportado[aportado.length - 1].anio) || 1;
+
+      var maxV = 0;
+      series.forEach(function (s) {
+        (s.puntos || []).forEach(function (p) {
+          if (isFinite(p.total) && p.total > maxV) maxV = p.total;
+        });
+      });
+      aportado.forEach(function (p) {
+        if (isFinite(p.aportado) && p.aportado > maxV) maxV = p.aportado;
+      });
+      var top = nice(maxV * 1.08) || 1;
+
+      var iw = W - M.left - M.right;
+      var ih = H - M.top - M.bottom;
+
+      function x(a) { return n(M.left + (Number(a) / anios) * iw); }
+      function y(v) { return n(M.top + ih - (Number(v) / top) * ih); }
+
+      /* Grilla horizontal y eje de valores */
+      var lineas = [0, 0.25, 0.5, 0.75, 1].map(function (f) {
+        var v = top * f, yy = y(v);
+        return '<line x1="' + n(M.left) + '" y1="' + yy + '" x2="' + n(M.left + iw) +
+                 '" y2="' + yy + '" stroke="' + COLORS.border + '" stroke-width="1"/>' +
+               '<text x="' + n(M.left + iw + 8) + '" y="' + n(yy + 4) + '" font-size="' + FS +
+                 '" fill="' + COLORS.text3 + '" font-family="Manrope, sans-serif">' +
+                 abreviar(v) + '</text>';
+      }).join('');
+
+      /* Área de capital aportado */
+      var areaPts = aportado.map(function (p) { return x(p.anio) + ',' + y(p.aportado); });
+      var area = 'M' + n(M.left) + ',' + y(0) + ' L' + areaPts.join(' L') +
+                 ' L' + x(anios) + ',' + y(0) + ' Z';
+      var lineaAportado = 'M' + areaPts.join(' L');
+
+      /* Trayectorias */
+      var paths = series.map(function (s) {
+        if (!s.puntos || !s.puntos.length) return '';
+        var d = 'M' + s.puntos.map(function (p) {
+          return x(p.anio) + ',' + y(p.total);
+        }).join(' L');
+        return '<path d="' + d + '" fill="none" stroke="' + resolver(s.color, COLORS) + '" ' +
+               'stroke-width="' + (s.discreta ? 1.5 : 2.5) + '" ' +
+               (s.discreta ? 'opacity="0.55" ' : '') +
+               'stroke-linejoin="round" stroke-linecap="round"' +
+               (s.dash ? ' stroke-dasharray="' + s.dash + '"' : '') + '/>';
+      }).join('');
+
+      /* Eje de tiempo */
+      var pasos = L.ticks
+        ? Math.max(1, Math.ceil(anios / (L.ticks - 1)))
+        : (anios <= 10 ? 1 : anios <= 20 ? 5 : 10);
+
+      function tick(a, anchor) {
+        return '<text x="' + x(a) + '" y="' + n(H - 7) + '" font-size="' + FS + '" fill="' +
+               COLORS.text3 + '" text-anchor="' + anchor + '" font-family="Manrope, sans-serif">' +
+               (a === 0 ? 'Hoy' : 'Año ' + a) + '</text>';
+      }
+      var ejeX = '';
+      for (var a = 0; a <= anios - pasos * 0.5; a += pasos) {
+        ejeX += tick(a, a === 0 ? 'start' : 'middle');
+      }
+      ejeX += tick(anios, 'end');
+
+      var svg =
+        '<svg class="chart-svg" xmlns="http://www.w3.org/2000/svg" ' +
+          'width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" ' +
+          'preserveAspectRatio="xMidYMid meet" role="img" ' +
+          'aria-label="Proyección de capital a ' + anios + ' años">' +
+          lineas +
+          '<path d="' + area + '" fill="' + COLORS.border + '" fill-opacity="0.55"/>' +
+          '<path d="' + lineaAportado + '" fill="none" stroke="' + COLORS.borderStrong +
+            '" stroke-width="1.5"/>' +
+          paths + ejeX +
+        '</svg>';
+
+      /* Ningún atributo puede quedar con NaN o undefined */
+      if (svg.indexOf('NaN') !== -1 || svg.indexOf('undefined') !== -1) {
+        console.warn('[chart] marcado inválido, se muestra el mensaje alternativo');
+        return FALLBACK;
+      }
+
+      return svg;
+
+    } catch (e) {
+      console.error('[chart] error al generar el gráfico', e);
+      return FALLBACK;
+    }
+  }
+
+  /* ── Verificación tras insertar en el DOM ──
+     Si el SVG no llegó a pintarse, se sustituye por el mensaje
+     alternativo en lugar de dejar un hueco silencioso. */
+
+  function verify(root) {
+    var contenedores = (root || document).querySelectorAll('.chart-wrap');
+    var resultados = [];
+
+    contenedores.forEach(function (wrap) {
+      var svg = wrap.querySelector('.chart-svg');
+      var r = { ok: false, motivo: '' };
+
+      if (!svg) {
+        r.motivo = wrap.querySelector('.chart-fallback') ? 'fallback' : 'sin-svg';
+        if (r.motivo === 'fallback') r.ok = true;
+      } else {
+        var box = svg.getBoundingClientRect();
+        var paths = svg.querySelectorAll('path');
+        var html = svg.outerHTML;
+
+        if (box.width <= 0 || box.height <= 0) r.motivo = 'dimension-cero';
+        else if (!paths.length) r.motivo = 'sin-paths';
+        else if (html.indexOf('NaN') !== -1) r.motivo = 'nan';
+        else if (html.indexOf('undefined') !== -1) r.motivo = 'undefined';
+        else {
+          var conStroke = 0;
+          paths.forEach(function (p) {
+            var st = p.getAttribute('stroke');
+            if (st && st !== 'none' && st.indexOf('var(') === -1) conStroke++;
+          });
+          if (!conStroke) r.motivo = 'sin-stroke-valido';
+          else r.ok = true;
+        }
+
+        if (!r.ok) {
+          console.warn('[chart] ' + r.motivo + ' — se muestra el mensaje alternativo');
+          svg.outerHTML = FALLBACK;
+        }
+      }
+      resultados.push(r);
+    });
+
+    return resultados;
+  }
+
+  return { proyeccion: proyeccion, verify: verify, abreviar: abreviar, cssColor: cssColor };
 })();
 
 
@@ -4601,21 +4911,22 @@ var ScreenInicio = (function () {
             'y conecta el horizonte con las distintas alternativas de ahorro e inversión.</p>' +
           '<div class="hero-actions">' +
             '<a class="btn btn--primary" href="#/diagnostico">Iniciar Ruta Financiera →</a>' +
-            '<a class="link-arrow" href="#explora">Explorar herramientas</a>' +
+            '<button type="button" class="link-arrow" id="btn-explora">' +
+              'Explorar herramientas</button>' +
           '</div>' +
         '</section>' +
 
         '<section class="journey">' +
           '<span class="t-eyebrow">El recorrido</span>' +
-          '<h2 class="t-h2">Siete pasos, en orden</h2>' +
+          '<h2 class="t-h2">Una secuencia para orientar la conversación</h2>' +
           '<div class="journey-track">' + journey + '</div>' +
           '<div class="home-estrategia">' +
             '<p class="t-body t-2">Puedes integrar más de una necesidad en Estrategia ' +
               'Financiera.</p>' +
             '<a class="link-arrow" href="#/estrategia">Construir estrategia</a>' +
           '</div>' +
-          '<p class="note">El orden importa: la solución se identifica después de establecer ' +
-            'etapa, objetivo y horizonte, y no antes. Cada paso puede consultarse por separado.</p>' +
+          '<p class="note">La Ruta propone un orden para organizar la información. Cada ' +
+            'módulo también puede consultarse de forma independiente.</p>' +
         '</section>' +
 
         '<section class="explore" id="explora">' +
@@ -4632,6 +4943,24 @@ var ScreenInicio = (function () {
         '</div>' +
 
       '</div>';
+
+    /* "Explorar herramientas" desplaza dentro de la misma pantalla.
+       No usa href="#explora": el hash es el mecanismo de routing y
+       cambiarlo haría que la aplicación intentara resolver una ruta
+       inexistente. La URL permanece en #/inicio. */
+    var btn = outlet.querySelector('#btn-explora');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var destino = document.getElementById('explora');
+        if (!destino) return;
+        var reducido = window.matchMedia &&
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        destino.scrollIntoView({
+          behavior: reducido ? 'auto' : 'smooth',
+          block: 'start'
+        });
+      });
+    }
   }
 
   return { render: render };
@@ -4690,6 +5019,24 @@ var ScreenDiagnostico = (function () {
              ' · ' + Fmt.esc(s.conceptoCentral) + '</div>';
   }
 
+  function focosHTML(etapa) {
+    if (!etapa || !STAGE_CONFIG[etapa] || !STAGE_CONFIG[etapa].focos) return '';
+    var f = STAGE_CONFIG[etapa].focos;
+
+    return '<div class="dg-focos">' +
+      '<div class="t-label">Focos sugeridos para esta etapa</div>' +
+      '<div class="focos">' + f.map(function (x) {
+        return '<div class="foco">' +
+                 '<div class="foco-t">' + Fmt.esc(x.titulo) + '</div>' +
+                 '<div class="foco-d">' + Fmt.esc(x.descripcion) + '</div>' +
+               '</div>';
+      }).join('') + '</div>' +
+      '<p class="t-small t-3" style="margin-top:var(--s4);max-width:70ch">La etapa ' +
+        'financiera orienta los focos de planificación, pero no determina por sí sola un ' +
+        'producto, serie o fondo.</p>' +
+    '</div>';
+  }
+
   function phasesHTML(etapa) {
     return STAGE_ORDER.map(function (id) {
       var s = STAGE_CONFIG[id];
@@ -4711,6 +5058,42 @@ var ScreenDiagnostico = (function () {
                (h ? '<div class="card-s">' + Fmt.esc(h.nombre) + '</div>' : '') +
              '</button>';
     }).join('');
+  }
+
+  /* Contexto del objetivo elegido. Es información, no una selección:
+     nada de esto se escribe en APP_STATE hasta que el usuario elija
+     explícitamente un horizonte. */
+  function sugerenciaHTML(objetivo) {
+    if (!objetivo) return '';
+
+    if (objetivo === 'jubilacion') {
+      return '<div class="dg-sug">' +
+        '<div class="sugerido">' +
+          '<span class="sugerido-k">Horizonte relacionado</span>' +
+          '<b>Largo plazo previsional</b>' +
+        '</div>' +
+        '<div class="sugerido">' +
+          '<span class="sugerido-k">Estructuras a explorar posteriormente</span>' +
+          '<b>APV · APV AP</b>' +
+        '</div>' +
+        '<p class="t-small t-3" style="margin-top:var(--s3)">El objetivo identifica un ' +
+          'contexto. Las estructuras se definen más adelante en la Ruta.</p>' +
+      '</div>';
+    }
+
+    var cfg = OBJECTIVE_CONFIG[objetivo];
+    if (!cfg) return '';
+    var h = HORIZON_CONFIG[cfg.horizonteSugerido];
+
+    return '<div class="dg-sug">' +
+      '<div class="sugerido">' +
+        '<span class="sugerido-k">Sugerido por el objetivo</span>' +
+        '<b>' + Fmt.esc(h.nombre) + '</b>' +
+        '<span class="t-3">· ' + Fmt.esc(h.referencia) + '</span>' +
+      '</div>' +
+      '<p class="t-small t-3" style="margin-top:var(--s3)">Selecciona un horizonte en el ' +
+        'paso 3 para incorporarlo a tu Ruta.</p>' +
+    '</div>';
   }
 
   function horizontesHTML(actual, objetivo) {
@@ -4737,20 +5120,76 @@ var ScreenDiagnostico = (function () {
     var etapa = AppState.get('etapa');
     var box = outlet.querySelector('#dg-etapa');
     var row = outlet.querySelector('#dg-phases');
+    var foc = outlet.querySelector('#dg-focos');
     if (box) box.innerHTML = etapaHTML(etapa);
     if (row) row.innerHTML = phasesHTML(etapa);
+    if (foc) foc.innerHTML = focosHTML(etapa);
+    refrescarCheckpoint(outlet);
   }
 
   function refrescarObjetivos(outlet) {
     var el = outlet.querySelector('#dg-obj');
     if (el) el.innerHTML = objetivosHTML(AppState.get('objetivo'));
+    var sug = outlet.querySelector('#dg-sug');
+    if (sug) sug.innerHTML = sugerenciaHTML(AppState.get('objetivo'));
     bindObjetivos(outlet);
+    refrescarCheckpoint(outlet);
+  }
+
+  /* ── Checkpoint ── */
+
+  function checkpointHTML() {
+    var s = AppState.get();
+    var completo = !!(s.etapa && s.objetivo && s.horizonte);
+
+    var items = [
+      { k: 'Etapa',     v: s.etapa ? STAGE_CONFIG[s.etapa].nombre : null },
+      { k: 'Objetivo',  v: s.objetivo ? OBJ_LABEL[s.objetivo] : null },
+      { k: 'Horizonte', v: s.horizonte ? HORIZON_CONFIG[s.horizonte].nombre : null }
+    ];
+
+    return RouteCheckpoint.html({
+      items: items,
+      mensaje: completo
+        ? 'Tu diagnóstico está definido.'
+        : 'Aún hay elementos sin definir. Puedes completarlos ahora o continuar con una ' +
+          'Ruta parcial.',
+      acciones: completo
+        ? [{ label: 'Ver soluciones relacionadas →', href: '#/soluciones', primary: true }]
+        : [{ label: 'Completar diagnóstico', id: 'cp-completar' },
+           { label: 'Continuar sin definir →', href: '#/soluciones' }]
+    });
+  }
+
+  function refrescarCheckpoint(outlet) {
+    var el = outlet.querySelector('#dg-cp');
+    if (!el) return;
+    el.innerHTML = checkpointHTML();
+    var btn = el.querySelector('#cp-completar');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var s = AppState.get();
+        var destino = !s.etapa ? '#in-edad' : (!s.objetivo ? '#dg-obj' : '#dg-hor');
+        var nodo = outlet.querySelector(destino);
+        if (nodo) {
+          nodo.scrollIntoView({ block: 'center',
+            behavior: reducido() ? 'auto' : 'smooth' });
+          if (destino === '#in-edad') nodo.focus({ preventScroll: true });
+        }
+      });
+    }
+  }
+
+  function reducido() {
+    return window.matchMedia &&
+           window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
   function refrescarHorizontes(outlet) {
     var el = outlet.querySelector('#dg-hor');
     if (el) el.innerHTML = horizontesHTML(AppState.get('horizonte'), AppState.get('objetivo'));
     bindHorizontes(outlet);
+    refrescarCheckpoint(outlet);
   }
 
   /* ═══ Render ═══ */
@@ -4771,19 +5210,19 @@ var ScreenDiagnostico = (function () {
               '<label for="in-edad">Edad</label>' +
               '<input type="text" id="in-edad" inputmode="numeric" autocomplete="off" ' +
                 'maxlength="3" placeholder="—" value="' + (edad || '') + '">' +
-              '<span class="field-hint">Entre 18 y 110 años</span>' +
+              '<span class="field-hint">Entre ' + AGE_MIN + ' y ' + AGE_MAX + ' años</span>' +
             '</div>' +
             '<div id="dg-etapa" class="dg-etapa"></div>' +
           '</div>' +
           '<div class="phases" id="dg-phases"></div>' +
-          '<p class="t-small t-3" style="margin-top:var(--s4)">La edad contextualiza la etapa. ' +
-            'No genera por sí sola una recomendación de inversión.</p>' +
+          '<div id="dg-focos"></div>' +
         '</section>' +
 
         /* ── 02 · OBJETIVO ── */
         '<section class="dg-block">' +
           '<div class="dg-num">02 · Objetivo</div>' +
           '<div class="cards cards--4" id="dg-obj"></div>' +
+          '<div id="dg-sug"></div>' +
         '</section>' +
 
         /* ── 03 · HORIZONTE ── */
@@ -4795,18 +5234,13 @@ var ScreenDiagnostico = (function () {
           '<div class="cards cards--4" id="dg-hor"></div>' +
         '</section>' +
 
-        '<div class="next">' +
-          '<a href="#/soluciones">' +
-            '<span class="next-k">Continuar</span>' +
-            '<span class="next-t">Ver soluciones relacionadas</span>' +
-            '<span class="next-d">Qué vehículo y qué serie corresponden a este horizonte</span>' +
-          '</a>' +
-        '</div>' +
+        '<div id="dg-cp"></div>' +
       '</div>';
 
     refrescarEtapa(outlet);
     refrescarObjetivos(outlet);
     refrescarHorizontes(outlet);
+    refrescarCheckpoint(outlet);
     bindEdad(outlet);
   }
 
@@ -4838,7 +5272,7 @@ var ScreenDiagnostico = (function () {
          Un valor intermedio como "3" mientras se escribe "35" no
          borra nada: simplemente aún no identifica etapa. */
       var v = parseInt(limpio, 10);
-      var etapa = (v >= 18 && v <= 110) ? resolveStage(v) : null;
+      var etapa = resolveStage(v);
 
       AppState.set({ edad: etapa ? v : null, etapa: etapa });
       refrescarEtapa(outlet);
@@ -4848,20 +5282,11 @@ var ScreenDiagnostico = (function () {
   function bindObjetivos(outlet) {
     outlet.querySelectorAll('[data-objetivo]').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var id = btn.getAttribute('data-objetivo');
-        var patch = { objetivo: id };
-        var cfg = OBJECTIVE_CONFIG[id];
-        if (cfg && !AppState.has('horizonte')) {
-          patch.horizonte = cfg.horizonteSugerido;
-          patch.serie = HORIZON_CONFIG[cfg.horizonteSugerido].series[0];
-          patch.vehiculo = SERIES_CONFIG[patch.serie].vehiculo;
-        }
-        if (id === 'jubilacion') {
-          patch.horizonte = 'largo';
-          patch.vehiculo = 'apv';
-          patch.serie = 'APV';
-        }
-        AppState.set(patch);
+        /* Sólo se registra el objetivo. El horizonte sugerido se
+           muestra como contexto, pero no se escribe en APP_STATE
+           hasta que el usuario lo seleccione en el paso 3. Lo mismo
+           vale para vehículo y serie, que se definen en Soluciones. */
+        AppState.set({ objetivo: btn.getAttribute('data-objetivo') });
         refrescarObjetivos(outlet);
         refrescarHorizontes(outlet);
       });
@@ -4872,19 +5297,12 @@ var ScreenDiagnostico = (function () {
     outlet.querySelectorAll('[data-hor]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var o = HOR_CARDS[parseInt(btn.getAttribute('data-hor'), 10)];
-        var patch = { horizonte: o.id };
 
-        if (o.jub) {
-          patch.objetivo = 'jubilacion';
-          patch.vehiculo = 'apv';
-          /* Se conserva APV AP si ya estaba elegida: el acceso a
-             ambas series debe seguir disponible después. */
-          var s = AppState.get('serie');
-          patch.serie = (s === 'APV_AP') ? 'APV_AP' : 'APV';
-        } else {
-          patch.serie = HORIZON_CONFIG[o.id].series[0];
-          patch.vehiculo = SERIES_CONFIG[patch.serie].vehiculo;
-        }
+        /* El horizonte sí es una elección explícita del usuario.
+           Vehículo y serie NO se derivan aquí: se definen cuando el
+           usuario selecciona una solución. */
+        var patch = { horizonte: o.id };
+        if (o.jub) patch.objetivo = 'jubilacion';
         AppState.set(patch);
         refrescarObjetivos(outlet);
         refrescarHorizontes(outlet);
@@ -4934,6 +5352,8 @@ var ScreenSoluciones = (function () {
   var ORDEN = ['corto','mediano','largo','jubilacion'];
   var abierto = null;
 
+  /* Sin contexto no hay tarjeta seleccionada: Serie A dejaba de ser
+     una vista inicial para parecer una elección del usuario. */
   function viaPorContexto() {
     var h = AppState.get('horizonte');
     var o = AppState.get('objetivo');
@@ -4941,8 +5361,11 @@ var ScreenSoluciones = (function () {
     if (h === 'corto') return 'corto';
     if (h === 'mediano') return 'mediano';
     if (h === 'largo') return 'largo';
-    return 'corto';
+    return null;
   }
+
+  /* ¿La vía abierta proviene del horizonte de la Ruta o de un clic? */
+  var abiertoPorUsuario = false;
 
   function cards(sel) {
     return ORDEN.map(function (id) {
@@ -5079,8 +5502,64 @@ var ScreenSoluciones = (function () {
     '</div>';
   }
 
+  function checkpointHTML() {
+    var s = AppState.get();
+    var definida = !!(s.vehiculo && s.serie);
+
+    return RouteCheckpoint.html({
+      items: [
+        { k: 'Solución explorada', v: s.vehiculo ? VEHICLE_CONFIG[s.vehiculo].nombre : null },
+        { k: 'Serie',              v: s.serie ? SERIES_CONFIG[s.serie].label : null }
+      ],
+      mensaje: definida
+        ? 'Tu solución está definida.'
+        : 'No has definido una solución. Puedes seleccionar una ahora o continuar ' +
+          'directamente a Fondos.',
+      acciones: definida
+        ? [{ label: 'Continuar a Fondos →', href: '#/fondos', primary: true }]
+        : [{ label: 'Definir solución', id: 'cp-definir' },
+           { label: 'Continuar sin definir →', href: '#/fondos' }]
+    });
+  }
+
+  function refrescarCheckpoint(outlet) {
+    var el = outlet.querySelector('#sol-cp');
+    if (!el) return;
+    el.innerHTML = checkpointHTML();
+    var btn = el.querySelector('#cp-definir');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var nodo = outlet.querySelector('#sol-cards');
+        if (nodo) nodo.scrollIntoView({ block: 'center',
+          behavior: (window.matchMedia &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'auto' : 'smooth' });
+      });
+    }
+  }
+
+  function reset() { abierto = null; abiertoPorUsuario = false; }
+
   function render(outlet) {
-    if (!abierto) abierto = viaPorContexto();
+    /* Si la Ruta se reinició, la vía abierta por el usuario ya no
+       corresponde a ninguna selección vigente: se recalcula. */
+    if (abiertoPorUsuario && !AppState.get('serie')) reset();
+
+    if (!abierto) {
+      abierto = viaPorContexto();
+      abiertoPorUsuario = false;
+    }
+
+    /* Cuando la vía se abre por el horizonte de la Ruta se rotula
+       como relación, no como selección. */
+    var porContexto = abierto && !abiertoPorUsuario && AppState.get('horizonte');
+    var relacion = porContexto
+      ? '<p class="vista-nota"><b>Relacionada con el horizonte definido en tu Ruta.</b> ' +
+        'Puedes explorar cualquier otra vía.</p>'
+      : '';
+
+    var cuerpo = abierto
+      ? relacion + detalle(abierto)
+      : '<p class="empty-sel">Selecciona una solución para explorar su estructura.</p>';
 
     outlet.innerHTML =
       '<div class="page">' +
@@ -5091,7 +5570,7 @@ var ScreenSoluciones = (function () {
 
         '<div class="cards cards--4" id="sol-cards">' + cards(abierto) + '</div>' +
 
-        detalle(abierto) +
+        cuerpo +
 
         '<div class="combo">' +
           '<span class="t-eyebrow">Una persona, distintos objetivos</span>' +
@@ -5108,25 +5587,25 @@ var ScreenSoluciones = (function () {
           'educativa. No constituye una recomendación automática ni una garantía de ' +
           'idoneidad. Los costos de administración dependen de la serie y del fondo.</p>' +
 
-        '<div class="next">' +
-          '<a href="#/fondos">' +
-            '<span class="next-k">Continuar</span>' +
-            '<span class="next-t">Fondos y Rentabilidades</span>' +
-            '<span class="next-d">Qué alternativas existen y cómo se han comportado</span>' +
-          '</a>' +
-        '</div>' +
+        '<div id="sol-cp"></div>' +
       '</div>';
 
     bind(outlet);
+    refrescarCheckpoint(outlet);
   }
 
   function bind(outlet) {
     outlet.querySelectorAll('[data-via]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         abierto = btn.getAttribute('data-via');
-        outlet.querySelector('#sol-cards').innerHTML = cards(abierto);
-        Fmt.swap(outlet.querySelector('#sol-detail'), detalle(abierto));
-        bind(outlet);
+        abiertoPorUsuario = true;
+
+        /* Selección explícita: aquí sí se incorporan vehículo y serie
+           a la Ruta. */
+        var v = VIAS[abierto];
+        AppState.set({ serie: v.serie, vehiculo: SERIES_CONFIG[v.serie].vehiculo });
+
+        render(outlet);
       });
     });
 
@@ -5138,7 +5617,7 @@ var ScreenSoluciones = (function () {
     });
   }
 
-  return { render: render };
+  return { render: render, reset: reset };
 })();
 
 
@@ -5362,9 +5841,19 @@ var ScreenFondos = (function () {
      Piezas compartidas
      ───────────────────────────────────────── */
 
+  /* Serie mostrada. Si el usuario no ha definido ninguna, Serie A
+     actúa como VISTA INICIAL de consulta: se muestra, pero no se
+     escribe en APP_STATE. Sólo al cambiarla queda incorporada. */
+  var SERIE_VISTA = 'A';
+
   function serieActiva() {
     var s = AppState.get('serie');
-    return (s && SERIES_CONFIG[s]) ? s : 'A';
+    return (s && SERIES_CONFIG[s]) ? s : SERIE_VISTA;
+  }
+
+  function serieEsVista() {
+    var s = AppState.get('serie');
+    return !(s && SERIES_CONFIG[s]);
   }
 
   function stamp() {
@@ -5544,7 +6033,13 @@ var ScreenFondos = (function () {
           filtroHTML() +
         '</div>' +
 
-        '<div style="margin-top:var(--s4)">' + serieDescripcion(serie) + '</div>' +
+        '<div style="margin-top:var(--s4)">' + serieDescripcion(serie) +
+          (serieEsVista()
+            ? '<p class="vista-nota"><b>Vista inicial: ' +
+              Fmt.esc(SERIES_CONFIG[serie].label) + '.</b> Aún no has incorporado una serie ' +
+              'a tu Ruta; cambia el selector para hacerlo.</p>'
+            : '') +
+        '</div>' +
 
         vacio +
         '<div class="cats">' + bloques + '</div>' +
@@ -5555,16 +6050,47 @@ var ScreenFondos = (function () {
         disclaimer('El horizonte asociado corresponde a una clasificación educativa ' +
                    'y no constituye una recomendación automática ni una garantía de idoneidad.') +
 
-        '<div class="next">' +
-          '<a href="#/simulador">' +
-            '<span class="next-k">Continuar</span>' +
-            '<span class="next-t">Simulador de Inversión</span>' +
-            '<span class="next-d">Qué podría ocurrir bajo distintos supuestos</span>' +
-          '</a>' +
-        '</div>' +
+        '<div id="fon-cp"></div>' +
       '</div>';
 
     bindVistaGeneral(outlet);
+    refrescarCheckpoint(outlet);
+  }
+
+  function checkpointHTML() {
+    var s = AppState.get();
+    var serie = s.serie && SERIES_CONFIG[s.serie] ? SERIES_CONFIG[s.serie].label : null;
+    var fondo = s.fondoId && FUND_CATALOG[s.fondoId] ? FUND_CATALOG[s.fondoId].nombre : null;
+
+    return RouteCheckpoint.html({
+      items: [
+        { k: 'Serie consultada', v: serie },
+        { k: 'Fondo explorado',  v: fondo }
+      ],
+      mensaje: fondo
+        ? 'Has explorado un fondo. Puedes usarlo como referencia histórica en el simulador.'
+        : 'No has explorado un fondo específico. Puedes continuar al simulador utilizando ' +
+          'un supuesto manual.',
+      acciones: fondo
+        ? [{ label: 'Continuar al Simulador →', href: '#/simulador', primary: true }]
+        : [{ label: 'Seleccionar fondo', id: 'cp-fondo' },
+           { label: 'Continuar sin fondo →', href: '#/simulador' }]
+    });
+  }
+
+  function refrescarCheckpoint(outlet) {
+    var el = outlet.querySelector('#fon-cp');
+    if (!el) return;
+    el.innerHTML = checkpointHTML();
+    var btn = el.querySelector('#cp-fondo');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var nodo = outlet.querySelector('.fund-list');
+        if (nodo) nodo.scrollIntoView({ block: 'start',
+          behavior: (window.matchMedia &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'auto' : 'smooth' });
+      });
+    }
   }
 
   function bindVistaGeneral(outlet) {
@@ -6199,11 +6725,14 @@ var ScreenSimulador = (function () {
     return (s && SERIES_CONFIG[s]) ? s : 'A';
   }
 
+  /* El fondo sólo alimenta la REFERENCIA HISTÓRICA. La simulación
+     funciona sin fondo, con un supuesto manual. Nunca se toma el
+     primero de la lista: eso haría parecer elegido algo que el
+     usuario no eligió. */
   function fondoActivo(serie) {
     var f = AppState.get('fondoId');
     if (f && FUND_CATALOG[f] && FUND_CATALOG[f].series.indexOf(serie) !== -1) return f;
-    var d = Data.fundsBySeries(serie);
-    return d.length ? d[0].id : null;
+    return null;
   }
 
   /* ═══ Generación ═══ */
@@ -6261,8 +6790,12 @@ var ScreenSimulador = (function () {
 
   function panelReferencia(serie, fondoId) {
     if (!fondoId) {
-      return '<div class="panel-ref"><div class="panel-k">Referencia histórica</div>' +
-             '<p class="t-small t-2" style="margin-top:var(--s4)">Selecciona un fondo.</p></div>';
+      return '<div class="panel-ref">' +
+        '<div class="panel-k">Referencia histórica</div>' +
+        '<p class="t-small t-2" style="margin-top:var(--s4);max-width:52ch">No se ha ' +
+          'seleccionado un fondo. Puedes generar una simulación mediante un supuesto manual ' +
+          'o seleccionar un fondo para consultar su referencia histórica.</p>' +
+      '</div>';
     }
     var f = FUND_CATALOG[fondoId];
     var r = Data.returns(serie, fondoId);
@@ -6433,13 +6966,30 @@ var ScreenSimulador = (function () {
   }
 
   function cta() {
-    if (!RES) return '';
-    return '<div class="section section--rule">' +
-      '<div class="actions">' +
-        '<a class="btn btn--primary" href="#/tributario">Continuar → Beneficios Tributarios</a>' +
-        '<a class="btn btn--secondary" href="#/ruta">Finalizar Ruta</a>' +
-      '</div>' +
-    '</div>';
+    if (RES) {
+      return RouteCheckpoint.html({
+        items: [
+          { k: 'Capital proyectado', v: Fmt.clp(RES.final) },
+          { k: 'Horizonte',          v: RES.anios + (RES.anios === 1 ? ' año' : ' años') },
+          { k: 'Supuesto',           v: Fmt.num(RES.supuesto, 1) + '% anual' }
+        ],
+        mensaje: 'Simulación generada.',
+        acciones: [
+          { label: 'Continuar a Tributario →', href: '#/tributario', primary: true },
+          { label: 'Finalizar Ruta', href: '#/ruta' }
+        ]
+      });
+    }
+
+    return RouteCheckpoint.html({
+      items: [{ k: 'Simulación', v: null }],
+      mensaje: 'Aún no has generado una simulación. Puedes hacerlo ahora o continuar sin ' +
+               'simulación.',
+      acciones: [
+        { label: 'Generar simulación', id: 'cp-generar' },
+        { label: 'Continuar sin simular →', href: '#/tributario' }
+      ]
+    });
   }
 
   /* Indica que la simulación pertenece a una capa de Estrategia */
@@ -6476,10 +7026,11 @@ var ScreenSimulador = (function () {
       avisos += '<p class="aviso">' + Fmt.esc(SIMULATION_CONFIG.avisos.usd) + '</p>';
     }
 
-    var fondos = Data.fundsBySeries(serie).map(function (x) {
-      return '<option value="' + x.id + '"' + (x.id === fondoId ? ' selected' : '') + '>' +
-             Fmt.esc(x.nombre) + '</option>';
-    }).join('');
+    var fondos = '<option value=""' + (fondoId ? '' : ' selected') + '>Selecciona un fondo</option>' +
+      Data.fundsBySeries(serie).map(function (x) {
+        return '<option value="' + x.id + '"' + (x.id === fondoId ? ' selected' : '') + '>' +
+               Fmt.esc(x.nombre) + '</option>';
+      }).join('');
     var series = SERIES_ORDER.map(function (s) {
       return '<option value="' + s + '"' + (s === serie ? ' selected' : '') + '>' +
              Fmt.esc(SERIES_CONFIG[s].label) + '</option>';
@@ -6512,7 +7063,7 @@ var ScreenSimulador = (function () {
               '<span class="field-hint">Determina los fondos disponibles</span></div>' +
             '<div class="field f-fondo"><label for="in-fondo">Fondo</label>' +
               '<select id="in-fondo">' + fondos + '</select>' +
-              '<span class="field-hint">Sólo para la referencia histórica</span></div>' +
+              '<span class="field-hint">Opcional · sólo para la referencia histórica</span></div>' +
           '</div>' +
 
           '<div class="field f-anios" style="margin-top:var(--s7);max-width:520px">' +
@@ -6536,6 +7087,9 @@ var ScreenSimulador = (function () {
       '</div>';
 
     bind(outlet, serie, fondoId);
+
+    /* El gráfico se comprueba una vez insertado en el DOM. */
+    if (RES) Chart.verify(outlet);
   }
 
   function bind(outlet, serie, fondoId) {
@@ -6570,7 +7124,7 @@ var ScreenSimulador = (function () {
     });
 
     outlet.querySelector('#in-fondo').addEventListener('change', function (e) {
-      AppState.set({ fondoId: e.target.value });
+      AppState.set({ fondoId: e.target.value || null });
       CFG.usandoHistorico = false;
       dirty = !!RES;
       render(outlet);
@@ -6611,6 +7165,19 @@ var ScreenSimulador = (function () {
       salir.addEventListener('click', function () {
         AppState.set({ estrategiaFoco: null });
         render(outlet);
+      });
+    }
+
+    var cpGen = outlet.querySelector('#cp-generar');
+    if (cpGen) {
+      cpGen.addEventListener('click', function () {
+        var b = outlet.querySelector('#btn-gen');
+        if (b) {
+          b.scrollIntoView({ block: 'center',
+            behavior: (window.matchMedia &&
+              window.matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'auto' : 'smooth' });
+          b.click();
+        }
       });
     }
 
@@ -6804,6 +7371,30 @@ var ScreenBrecha = (function () {
     '</div>';
   }
 
+  function checkpointHTML() {
+    if (CALC) {
+      return RouteCheckpoint.html({
+        items: [
+          { k: 'Brecha mensual', v: Fmt.clp(CALC.mensual) },
+          { k: 'Años restantes', v: String(CALC.anios) }
+        ],
+        mensaje: 'Brecha previsional calculada.',
+        acciones: [
+          { label: 'Simular ahorro APV →', href: '#/simulador', id: 'br-sim-cp', primary: true },
+          { label: 'Ver beneficios tributarios', href: '#/tributario' }
+        ]
+      });
+    }
+    return RouteCheckpoint.html({
+      items: [{ k: 'Brecha previsional', v: null }],
+      mensaje: 'La brecha previsional aún no ha sido calculada.',
+      acciones: [
+        { label: 'Calcular brecha', id: 'cp-calcular' },
+        { label: 'Continuar sin calcular →', href: '#/simulador' }
+      ]
+    });
+  }
+
   function cierre() {
     var anios = CALC ? CALC.anios : B.anios;
     return '<p class="note">La herramienta no proyecta pensiones ni sustituye la información ' +
@@ -6836,6 +7427,7 @@ var ScreenBrecha = (function () {
         configuracion() +
         barraAccion() +
         resultado() +
+        checkpointHTML() +
         cierre() +
       '</div>';
 
@@ -6887,8 +7479,15 @@ var ScreenBrecha = (function () {
       });
     }
 
-    var sim = outlet.querySelector('#br-sim');
-    if (sim) {
+    var cpCalc = outlet.querySelector('#cp-calcular');
+    if (cpCalc) {
+      cpCalc.addEventListener('click', function () {
+        var x = outlet.querySelector('#btn-calc');
+        if (x) { x.scrollIntoView({ block: 'center' }); x.click(); }
+      });
+    }
+
+    outlet.querySelectorAll('#br-sim, #br-sim-cp').forEach(function (sim) {
       sim.addEventListener('click', function () {
         var serie = AppState.get('serie');
         if (!serie || SERIES_CONFIG[serie].vehiculo !== 'apv') serie = 'APV';
@@ -6909,7 +7508,7 @@ var ScreenBrecha = (function () {
           });
         }
       });
-    }
+    });
   }
 
   return { render: render, reset: reset };
@@ -6926,6 +7525,9 @@ var ScreenBrecha = (function () {
 var ScreenTributario = (function () {
 
   var abierto = 'art57';
+  /* Registro de lo consultado en la sesión. La consulta tributaria
+     no es una decisión: no se exige seleccionar ningún régimen. */
+  var revisados = {};
 
   function cards(sel, vehiculoCtx) {
     return TAX_ORDER.map(function (id) {
@@ -7040,8 +7642,27 @@ var ScreenTributario = (function () {
     '</div>';
   }
 
+  function checkpointHTML() {
+    var lista = TAX_ORDER.filter(function (id) { return revisados[id]; })
+      .map(function (id) { return TAX_CONFIG[id].nombre; });
+
+    return RouteCheckpoint.html({
+      items: lista.length
+        ? [{ k: 'Contenido revisado durante esta sesión', v: lista.join(' · ') }]
+        : [],
+      mensaje: lista.length
+        ? null
+        : 'Puedes revisar cualquier instrumento antes de continuar.',
+      acciones: [
+        { label: 'Finalizar Ruta →', href: '#/ruta', primary: true },
+        { label: 'Brecha Previsional', href: '#/brecha' }
+      ]
+    });
+  }
+
   function render(outlet) {
     var vehiculo = AppState.get('vehiculo');
+    revisados[abierto] = true;
 
     outlet.innerHTML =
       '<div class="page">' +
@@ -7068,18 +7689,7 @@ var ScreenTributario = (function () {
 
         '<p class="note">' + Fmt.esc(TAX_META.encuadre) + '</p>' +
 
-        '<div class="next">' +
-          '<a href="#/brecha">' +
-            '<span class="next-k">Relacionado</span>' +
-            '<span class="next-t">Brecha Previsional</span>' +
-            '<span class="next-d">Dimensionar el objetivo de jubilación</span>' +
-          '</a>' +
-          '<a href="#/ruta">' +
-            '<span class="next-k">Cerrar</span>' +
-            '<span class="next-t">Resumen de la Ruta</span>' +
-            '<span class="next-d">Reunir todo el recorrido</span>' +
-          '</a>' +
-        '</div>' +
+        checkpointHTML() +
       '</div>';
 
     bind(outlet, vehiculo);
@@ -7091,6 +7701,10 @@ var ScreenTributario = (function () {
     outlet.querySelectorAll('[data-tax]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         abierto = btn.getAttribute('data-tax');
+        revisados[abierto] = true;
+
+        var cp = outlet.querySelector('.cp');
+        if (cp) cp.outerHTML = checkpointHTML();
 
         var grid = outlet.querySelector('#tax-cards');
         grid.innerHTML = cards(abierto, vehiculo);
@@ -7116,26 +7730,31 @@ var ScreenTributario = (function () {
 
 var ScreenResumen = (function () {
 
-  /* ── 01 · Punto de partida ── */
-  function puntoPartida(s) {
-    var celdas = [
-      { k:'Etapa financiera', v: s.etapa ? STAGE_CONFIG[s.etapa].nombre : null, href:'#/diagnostico' },
-      { k:'Objetivo',         v: s.objetivo ? OBJECTIVE_CONFIG[s.objetivo].nombre : null, href:'#/diagnostico' },
-      { k:'Horizonte',        v: s.horizonte
-          ? HORIZON_CONFIG[s.horizonte].nombre + ' · ' + HORIZON_CONFIG[s.horizonte].referencia
-          : null, href:'#/diagnostico' }
-    ];
+  /* Celdas de una sección, con "Sin definir" cuando no hay dato.
+     Nunca se rellena automáticamente un valor no elegido. */
+  function celdas(lista) {
+    return '<div class="rt-start">' + lista.map(function (c) {
+      return '<div class="rt-cell">' +
+               '<div class="ref-k">' + Fmt.esc(c.k) + '</div>' +
+               '<div class="rt-cell-v' + (c.v ? '' : ' empty') + '">' +
+                 (c.v ? Fmt.esc(c.v) : '<a href="' + c.href + '">Sin definir</a>') +
+               '</div>' +
+             '</div>';
+    }).join('') + '</div>';
+  }
 
+  /* ── 01 · Punto de partida · DEFINIDO POR EL USUARIO ── */
+  function puntoPartida(s) {
     return '<section class="rt-sec">' +
       '<div class="rt-k">01 · Punto de partida</div>' +
-      '<div class="rt-start">' + celdas.map(function (c) {
-        return '<div class="rt-cell">' +
-                 '<div class="ref-k">' + Fmt.esc(c.k) + '</div>' +
-                 '<div class="rt-cell-v' + (c.v ? '' : ' empty') + '">' +
-                   (c.v ? Fmt.esc(c.v) : '<a href="' + c.href + '">Sin definir</a>') +
-                 '</div>' +
-               '</div>';
-      }).join('') + '</div>' +
+      '<div class="rt-origen">Definido por ti</div>' +
+      celdas([
+        { k:'Etapa financiera', v: s.etapa ? STAGE_CONFIG[s.etapa].nombre : null, href:'#/diagnostico' },
+        { k:'Objetivo',         v: s.objetivo ? OBJECTIVE_CONFIG[s.objetivo].nombre : null, href:'#/diagnostico' },
+        { k:'Horizonte',        v: s.horizonte
+            ? HORIZON_CONFIG[s.horizonte].nombre + ' · ' + HORIZON_CONFIG[s.horizonte].referencia
+            : null, href:'#/diagnostico' }
+      ]) +
     '</section>';
   }
 
@@ -7200,6 +7819,7 @@ var ScreenResumen = (function () {
 
     return '<section class="rt-sec rt-estrategia">' +
       '<div class="rt-k">Estrategia construida</div>' +
+      '<div class="rt-origen">Explorado durante la Ruta</div>' +
       '<p class="t-small t-2" style="margin-top:var(--s2)">Necesidades financieras ' +
         'consideradas durante la Ruta.</p>' +
       '<div class="est-quick">' + quick + '</div>' +
@@ -7234,6 +7854,7 @@ var ScreenResumen = (function () {
 
     return '<section class="rt-sec">' +
       '<div class="rt-k">02 · Solución relacionada</div>' +
+      '<div class="rt-origen">Explorado durante la Ruta</div>' +
       '<div class="rt-sol">' +
         '<div>' +
           '<div class="rt-h">' + Fmt.esc(veh.nombre) + '</div>' +
@@ -7264,6 +7885,7 @@ var ScreenResumen = (function () {
 
     return '<section class="rt-sec">' +
       '<div class="rt-k">03 · Alternativa explorada</div>' +
+      '<div class="rt-origen">Explorado durante la Ruta</div>' +
       '<div class="rt-h" style="margin-top:var(--s4)">' + Fmt.esc(f.nombre) + '</div>' +
       '<div class="rt-sub">Fondo explorado durante la Ruta</div>' +
       '<div class="rt-fund">' +
@@ -7299,6 +7921,7 @@ var ScreenResumen = (function () {
 
     return '<section class="rt-sec rt-sec--main">' +
       '<div class="rt-k">04 · Simulación</div>' +
+      '<div class="rt-origen">Calculado a partir de tus supuestos</div>' +
       '<div class="res-big num">' + Fmt.clp(sim.final) + '</div>' +
       '<div class="res-cap">Capital proyectado</div>' +
 
@@ -7330,6 +7953,7 @@ var ScreenResumen = (function () {
 
     return '<section class="rt-sec">' +
       '<div class="rt-k">05 · Brecha previsional</div>' +
+      '<div class="rt-origen">Calculado a partir de los datos ingresados</div>' +
       '<div class="res-big num" style="font-size:var(--fs-num-xl)">' + Fmt.clp(br.mensual) + '</div>' +
       '<div class="res-cap">Brecha mensual estimada</div>' +
       '<p class="t-small t-2" style="margin-top:var(--s3)">Con ' + br.anios +
@@ -7358,6 +7982,7 @@ var ScreenResumen = (function () {
 
     return '<section class="rt-sec">' +
       '<div class="rt-k">06 · Consideración tributaria</div>' +
+      '<div class="rt-origen">Contenido relacionado con el vehículo explorado</div>' +
       '<div class="rt-tax">' + ids.map(function (id) {
         var t = TAX_CONFIG[id];
         return '<div class="rt-tax-i">' +
@@ -7465,6 +8090,9 @@ var ScreenResumen = (function () {
           '<p class="t-read head-lead">Síntesis del recorrido realizado.</p>' +
           '<p class="t-small t-3 rt-fecha">Sesión del ' + Fmt.esc(fecha) +
             ' · Datos de fondos al ' + Fmt.esc(DATA_META.date) + '</p>' +
+          '<p class="t-small t-3 rt-leyenda">Cada sección indica su procedencia: ' +
+            '<b>definido por ti</b>, <b>explorado durante la Ruta</b> o <b>calculado</b> a ' +
+            'partir de los datos que ingresaste.</p>' +
         '</div>' +
 
         puntoPartida(s) +
@@ -7491,10 +8119,14 @@ var ScreenResumen = (function () {
           Fmt.esc(DATA_META.disclaimer) + '</p>' +
       '</div>';
 
+    /* El gráfico se comprueba una vez insertado en el DOM. */
+    Chart.verify(outlet);
+
     outlet.querySelector('#rt-print').addEventListener('click', function () { window.print(); });
     outlet.querySelector('#rt-reset').addEventListener('click', function () {
       AppState.reset();
       if (window.ScreenSimulador && ScreenSimulador.reset) ScreenSimulador.reset();
+        if (window.ScreenSoluciones && ScreenSoluciones.reset) ScreenSoluciones.reset();
       if (window.ScreenBrecha && ScreenBrecha.reset) ScreenBrecha.reset();
       Router.go('inicio');
     });
